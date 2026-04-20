@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora - Premium Mobile Accessories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        nexora: {
+                            black: '#0a0a0a',
+                            dark: '#121212',
+                            gray: '#1e1e1e',
+                            accent: '#00d4ff',
+                            accentHover: '#00a8cc',
+                            neon: '#00f0ff',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px #00d4ff, 0 0 10px #00d4ff' },
+                            '100%': { boxShadow: '0 0 20px #00d4ff, 0 0 30px #00d4ff' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .neon-border {
+            position: relative;
+        }
+        
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #00d4ff, transparent, #00d4ff);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .neon-border:hover::before {
+            opacity: 1;
+        }
+        
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+        }
+        
+        .cart-slide {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .cart-slide.open {
+            transform: translateX(0);
+        }
+        
+        .search-expand {
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .search-expand.active {
+            width: 200px;
+            opacity: 1;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(10,10,10,0) 50%, rgba(0,212,255,0.05) 100%);
+        }
+        
+        .scroll-hidden::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scroll-hidden {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .star-rating {
+            color: #00d4ff;
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+        }
+        
+        .badge-bestseller {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+        }
+        
+        .loader {
+            border-top-color: #00d4ff;
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+        
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .category-pill {
+            transition: all 0.3s ease;
+        }
+        
+        .category-pill.active {
+            background: #00d4ff;
+            color: #0a0a0a;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+        
+        .quantity-btn {
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:active {
+            transform: scale(0.9);
+        }
+        
+        .checkout-input {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .checkout-input:focus {
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+            outline: none;
+        }
+        
+        .trust-badge {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+        
+        .trust-badge:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        .toast {
+            transform: translateX(120%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .image-zoom {
+            overflow: hidden;
+        }
+        
+        .image-zoom img {
+            transition: transform 0.5s ease;
+        }
+        
+        .image-zoom:hover img {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="showHome()">
+                    <div class="w-8 h-8 bg-gradient-to-br from-nexora-accent to-blue-600 rounded-lg flex items-center justify-center mr-2">
+                        <span class="text-white font-bold text-lg">N</span>
+                    </div>
+                    <span class="font-display font-bold text-2xl tracking-tight text-white">
+                        Nex<span class="text-nexora-accent">ora</span>
+                    </span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" onclick="showHome()" class="text-gray-300 hover:text-nexora-accent transition-colors text-sm font-medium">Home</a>
+                    <a href="#products" onclick="scrollToProducts()" class="text-gray-300 hover:text-nexora-accent transition-colors text-sm font-medium">Products</a>
+                    <a href="#bestsellers" onclick="scrollToBestSellers()" class="text-gray-300 hover:text-nexora-accent transition-colors text-sm font-medium">Best Sellers</a>
+                    <a href="#contact" onclick="showContact()" class="text-gray-300 hover:text-nexora-accent transition-colors text-sm font-medium">Contact</a>
+                </div>
+
+                <!-- Search & Cart -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative flex items-center">
+                        <input type="text" id="searchInput" placeholder="Search..." 
+                            class="search-expand bg-nexora-gray border border-white/10 rounded-full px-4 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-nexora-accent"
+                            onkeyup="handleSearch(event)">
+                        <button onclick="toggleSearch()" class="text-gray-300 hover:text-nexora-accent transition-colors p-2">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <button onclick="toggleCart()" class="relative text-gray-300 hover:text-nexora-accent transition-colors p-2">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-nexora-accent text-nexora-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                    </button>
+                    
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white p-2">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-panel border-t border-white/10">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#" onclick="showHome(); toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Home</a>
+                <a href="#products" onclick="scrollToProducts(); toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Products</a>
+                <a href="#bestsellers" onclick="scrollToBestSellers(); toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Best Sellers</a>
+                <a href="#contact" onclick="showContact(); toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Sidebar -->
+    <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+    <div id="cartSidebar" class="cart-slide fixed top-0 right-0 h-full w-full sm:w-96 bg-nexora-dark border-l border-white/10 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-display font-bold text-white">Shopping Cart</h2>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="cartItems" class="space-y-4 mb-6">
+                <p class="text-gray-400 text-center py-8">Your cart is empty</p>
+            </div>
+            
+            <div id="cartFooter" class="border-t border-white/10 pt-4 hidden">
+                <div class="flex justify-between mb-2 text-gray-400">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">Rs. 0</span>
+                </div>
+                <div class="flex justify-between mb-4 text-lg font-bold text-white">
+                    <span>Total</span>
+                    <span id="cartTotal">Rs. 0</span>
+                </div>
+                <button onclick="showCheckout()" class="w-full bg-nexora-accent hover:bg-nexora-accentHover text-nexora-black font-bold py-3 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                    Checkout
+                </button>
+                <button onclick="clearCart()" class="w-full mt-2 border border-white/20 hover:border-red-500 text-gray-400 hover:text-red-400 font-medium py-2 rounded-lg transition-all text-sm">
+                    Clear Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+            <div class="absolute inset-0 hero-gradient"></div>
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=1920&q=80')] bg-cover bg-center opacity-20"></div>
+            
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+                <div class="animate-float mb-8 inline-block">
+                    <div class="w-24 h-24 mx-auto bg-gradient-to-br from-nexora-accent to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-nexora-accent/30">
+                        <i class="fas fa-bolt text-4xl text-white"></i>
+                    </div>
+                </div>
+                
+                <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Power Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-nexora-accent to-blue-500">Digital Life</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                    Premium mobile accessories engineered for the modern Sri Lankan tech enthusiast
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="scrollToProducts()" class="bg-nexora-accent hover:bg-nexora-accentHover text-nexora-black font-bold py-4 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-nexora-accent/25">
+                        Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button onclick="showContact()" class="border border-white/20 hover:border-nexora-accent text-white font-medium py-4 px-8 rounded-full transition-all hover:bg-white/5">
+                        Contact Us
+                    </button>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <i class="fas fa-shield-alt text-nexora-accent text-2xl mb-2"></i>
+                        <p class="text-xs text-gray-400">Secure Payment</p>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <i class="fas fa-truck text-nexora-accent text-2xl mb-2"></i>
+                        <p class="text-xs text-gray-400">Fast Delivery</p>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <i class="fas fa-undo text-nexora-accent text-2xl mb-2"></i>
+                        <p class="text-xs text-gray-400">7-Day Returns</p>
+                    </div>
+                    <div class="glass-panel rounded-xl p-4 text-center">
+                        <i class="fas fa-headset text-nexora-accent text-2xl mb-2"></i>
+                        <p class="text-xs text-gray-400">24/7 Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section id="products" class="py-20 bg-nexora-dark">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="font-display text-3xl md:text-4xl font-bold text-center mb-12">Browse Categories</h2>
+                
+                <div class="flex overflow-x-auto scroll-hidden gap-4 pb-4 mb-8" id="categoryContainer">
+                    <button onclick="filterCategory('all')" class="category-pill active whitespace-nowrap px-6 py-2 rounded-full bg-nexora-gray border border-white/10 text-sm font-medium">
+                        All Products
+                    </button>
+                    <button onclick="filterCategory('powerbanks')" class="category-pill whitespace-nowrap px-6 py-2 rounded-full bg-nexora-gray border border-white/10 text-sm font-medium text-gray-300 hover:text-white">
+                        Power Banks
+                    </button>
+                    <button onclick="filterCategory('chargers')" class="category-pill whitespace-nowrap px-6 py-2 rounded-full bg-nexora-gray border border-white/10 text-sm font-medium text-gray-300 hover:text-white">
+                        Chargers
+                    </button>
+                    <button onclick="filterCategory('cables')" class="category-pill whitespace-nowrap px-6 py-2 rounded-full bg-nexora-gray border border-white/10 text-sm font-medium text-gray-300 hover:text-white">
+                        USB Cables
+                    </button>
+                    <button onclick="filterCategory('earphones')" class="category-pill whitespace-nowrap px-6 py-2 rounded-full bg-nexora-gray border border-white/10 text-sm font-medium text-gray-300 hover:text-white">
+                        Earphones
+                    </button>
+                    <button onclick="filterCategory('cases')" class="category-pill whitespace-nowrap px-6 py-2 rounded-full bg-nexora-gray border border-white/10 text-sm font-medium text-gray-300 hover:text-white">
+                        Phone Cases
+                    </button>
+                    <button onclick="filterCategory('other')" class="category-pill whitespace-nowrap px-6 py-2 rounded-full bg-nexora-gray border border-white/10 text-sm font-medium text-gray-300 hover:text-white">
+                        Other Tech
+                    </button>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Products injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Sellers -->
+        <section id="bestsellers" class="py-20 bg-nexora-black relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-nexora-accent to-transparent opacity-30"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between mb-12">
+                    <div>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-2">Best Sellers</h2>
+                        <p class="text-gray-400">Most loved by our customers</p>
+                    </div>
+                    <button onclick="scrollToProducts()" class="hidden sm:block text-nexora-accent hover:text-white transition-colors font-medium">
+                        View All <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <div id="bestSellersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Best sellers injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- New Arrivals -->
+        <section class="py-20 bg-nexora-dark">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between mb-12">
+                    <div>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-2">New Arrivals</h2>
+                        <p class="text-gray-400">Fresh in stock this week</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="scrollNewArrivals('left')" class="w-10 h-10 rounded-full bg-nexora-gray border border-white/10 flex items-center justify-center hover:bg-nexora-accent hover:text-nexora-black transition-all">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button onclick="scrollNewArrivals('right')" class="w-10 h-10 rounded-full bg-nexora-gray border border-white/10 flex items-center justify-center hover:bg-nexora-accent hover:text-nexora-black transition-all">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="newArrivalsContainer" class="flex overflow-x-auto scroll-hidden gap-6 pb-4 snap-x snap-mandatory">
+                    <!-- New arrivals injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-nexora-black relative">
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-nexora-accent/5 rounded-full blur-3xl"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">Get in Touch</h2>
+                        <p class="text-gray-400 mb-8 text-lg">Have questions? We're here to help. Reach out via WhatsApp for instant support or call us directly.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-nexora-gray border border-white/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fab fa-whatsapp text-green-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white mb-1">WhatsApp</h3>
+                                    <a href="https://wa.me/94771234567" target="_blank" class="text-nexora-accent hover:text-white transition-colors">+94 77 123 4567</a>
+                                    <p class="text-sm text-gray-500 mt-1">Instant replies during business hours</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-nexora-gray border border-white/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-nexora-accent text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white mb-1">Phone</h3>
+                                    <a href="tel:+94771234567" class="text-nexora-accent hover:text-white transition-colors">+94 77 123 4567</a>
+                                    <p class="text-sm text-gray-500 mt-1">Mon-Sat, 9AM - 6PM</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-nexora-gray border border-white/10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-envelope text-nexora-accent text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white mb-1">Email</h3>
+                                    <a href="mailto:hello@nexora.lk" class="text-nexora-accent hover:text-white transition-colors">hello@nexora.lk</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/94771234567" target="_blank" class="inline-flex items-center mt-8 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-green-500/25">
+                            <i class="fab fa-whatsapp mr-2 text-xl"></i>
+                            Chat on WhatsApp
+                        </a>
+                    </div>
+                    
+                    <div class="glass-panel rounded-2xl p-8 border border-white/10">
+                        <h3 class="font-display text-xl font-bold mb-6">Quick Order via WhatsApp</h3>
+                        <form onsubmit="handleQuickOrder(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Your Name</label>
+                                <input type="text" required class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Phone Number</label>
+                                <input type="tel" required class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="077 123 4567">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">What do you need?</label>
+                                <textarea required rows="3" class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="I'm looking for..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-nexora-accent hover:bg-nexora-accentHover text-nexora-black font-bold py-3 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                Send Order Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeProductModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div class="bg-nexora-dark border border-white/10 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto pointer-events-auto shadow-2xl">
+                <div id="productModalContent" class="p-6 md:p-8">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCheckout()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div class="bg-nexora-dark border border-white/10 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto pointer-events-auto shadow-2xl">
+                <div class="p-6 md:p-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="font-display text-2xl font-bold">Checkout</h2>
+                        <button onclick="closeCheckout()" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <form onsubmit="handleCheckout(event)" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Full Name *</label>
+                                <input type="text" required class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="Your full name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Phone Number *</label>
+                                <input type="tel" required class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="077 123 4567">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Delivery Address *</label>
+                            <textarea required rows="2" class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="Street address, City, District"></textarea>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Email (optional)</label>
+                                <input type="email" class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="email@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">City/District</label>
+                                <input type="text" class="checkout-input w-full rounded-lg px-4 py-3 text-white" placeholder="Colombo">
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-white/10 pt-4">
+                            <h3 class="font-semibold mb-4">Payment Method</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center p-4 rounded-lg border border-white/10 cursor-pointer hover:bg-white/5 transition-colors">
+                                    <input type="radio" name="payment" value="cod" checked class="mr-3 text-nexora-accent focus:ring-nexora-accent">
+                                    <div>
+                                        <div class="font-medium">Cash on Delivery</div>
+                                        <div class="text-sm text-gray-500">Pay when you receive</div>
+                                    </div>
+                                    <i class="fas fa-money-bill-wave ml-auto text-green-400"></i>
+                                </label>
+                                <label class="flex items-center p-4 rounded-lg border border-white/10 cursor-pointer hover:bg-white/5 transition-colors opacity-50">
+                                    <input type="radio" name="payment" value="card" disabled class="mr-3">
+                                    <div>
+                                        <div class="font-medium">Card Payment</div>
+                                        <div class="text-sm text-gray-500">Coming soon</div>
+                                    </div>
+                                    <i class="fas fa-credit-card ml-auto text-gray-500"></i>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-white/10 pt-4">
+                            <div class="flex justify-between mb-2 text-gray-400">
+                                <span>Subtotal</span>
+                                <span id="checkoutSubtotal">Rs. 0</span>
+                            </div>
+                            <div class="flex justify-between mb-2 text-gray-400">
+                                <span>Delivery</span>
+                                <span>Rs. 300</span>
+                            </div>
+                            <div class="flex justify-between mb-4 text-lg font-bold text-white">
+                                <span>Total</span>
+                                <span id="checkoutTotal">Rs. 0</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-nexora-accent hover:bg-nexora-accentHover text-nexora-black font-bold py-4 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] text-lg">
+                            Place Order
+                        </button>
+                        
+                        <div class="flex items-center justify-center gap-4 text-xs text-gray-500 mt-4">
+                            <span class="flex items-center"><i class="fas fa-lock mr-1"></i> Secure</span>
+                            <span class="flex items-center"><i class="fas fa-truck mr-1"></i> Fast Delivery</span>
+                            <span class="flex items-center"><i class="fas fa-undo mr-1"></i> Easy Returns</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast fixed bottom-4 right-4 z-50 bg-nexora-gray border border-nexora-accent/30 rounded-lg p-4 shadow-2xl flex items-center gap-3 max-w-sm">
+        <div class="w-8 h-8 rounded-full bg-nexora-accent/20 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-check text-nexora-accent"></i>
+        </div>
+        <div>
+            <h4 class="font-semibold text-sm" id="toastTitle">Success</h4>
+            <p class="text-xs text-gray-400" id="toastMessage">Item added to cart</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-nexora-black border-t border-white/10 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="md:col-span-1">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-nexora-accent to-blue-600 rounded-lg flex items-center justify-center mr-2">
+                            <span class="text-white font-bold text-lg">N</span>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">
+                            Nex<span class="text-nexora-accent">ora</span>
+                        </span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Premium mobile accessories for the modern Sri Lankan. Quality tech, delivered fast.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-nexora-accent transition-colors"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-nexora-accent transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-nexora-accent transition-colors"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" onclick="showHome()" class="hover:text-nexora-accent transition-colors">Home</a></li>
+                        <li><a href="#products" onclick="scrollToProducts()" class="hover:text-nexora-accent transition-colors">Products</a></li>
+                        <li><a href="#bestsellers" onclick="scrollToBestSellers()" class="hover:text-nexora-accent transition-colors">Best Sellers</a></li>
+                        <li><a href="#contact" onclick="showContact()" class="hover:text-nexora-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Categories</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" onclick="filterCategory('powerbanks')" class="hover:text-nexora-accent transition-colors">Power Banks</a></li>
+                        <li><a href="#" onclick="filterCategory('chargers')" class="hover:text-nexora-accent transition-colors">Chargers</a></li>
+                        <li><a href="#" onclick="filterCategory('earphones')" class="hover:text-nexora-accent transition-colors">Earphones</a></li>
+                        <li><a href="#" onclick="filterCategory('cases')" class="hover:text-nexora-accent transition-colors">Phone Cases</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center"><i class="fab fa-whatsapp mr-2 text-green-400"></i> +94 77 123 4567</li>
+                        <li class="flex items-center"><i class="fas fa-phone mr-2 text-nexora-accent"></i> +94 77 123 4567</li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-2 text-nexora-accent"></i> hello@nexora.lk</li>
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-nexora-accent"></i> Colombo, Sri Lanka</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">© 2024 Nexora. All rights reserved.</p>
+                <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                    <div class="trust-badge flex items-center text-gray-500 text-xs">
+                        <i class="fas fa-shield-alt mr-1"></i> SSL Secure
+                    </div>
+                    <div class="trust-badge flex items-center text-gray-500 text-xs">
+                        <i class="fas fa-truck mr-1"></i> Island-wide
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "Anker PowerCore 20000mAh",
+                category: "powerbanks",
+                price: 8500,
+                originalPrice: 12000,
+                image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&q=80",
+                rating: 4.8,
+                reviews: 124,
+                badge: "bestseller",
+                description: "High-capacity power bank with PowerIQ technology. Charges iPhone 12 up to 5 times. Dual USB ports for simultaneous charging.",
+                features: ["20000mAh Capacity", "PowerIQ Technology", "Dual USB Ports", "Compact Design"]
+            },
+            {
+                id: 2,
+                name: "Baseus 65W GaN Charger",
+                category: "chargers",
+                price: 4500,
+                originalPrice: 6500,
+                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500&q=80",
+                rating: 4.9,
+                reviews: 89,
+                badge: "new",
+                description: "Gallium Nitride technology charger. 3 ports (2 USB-C, 1 USB-A). Supports PD 3.0 and QC 4.0 fast charging.",
+                features: ["65W Output", "3 Ports", "GaN Technology", "Universal Compatibility"]
+            },
+            {
+                id: 3,
+                name: "Braided USB-C Cable 2m",
+                category: "cables",
+                price: 1200,
+                originalPrice: 1800,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&q=80",
+                rating: 4.6,
+                reviews: 256,
+                badge: "bestseller",
+                description: "Premium nylon braided cable. Supports 3A fast charging and data transfer. Aluminum alloy connectors.",
+                features: ["2 Meter Length", "Nylon Braided", "3A Fast Charge", "Aluminum Connectors"]
+            },
+            {
+                id: 4,
+                name: "JBL Tune 760NC",
+                category: "earphones",
+                price: 18500,
+                originalPrice: 25000,
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
+                rating: 4.7,
+                reviews: 67,
+                badge: "new",
+                description: "Active noise cancelling wireless headphones. 35-hour battery life. Pure Bass sound with Bluetooth 5.0.",
+                features: ["Active NC", "35h Battery", "Bluetooth 5.0", "Foldable Design"]
+            },
+            {
+                id: 5,
+                name: "Spigen Tough Armor Case",
+                category: "cases",
+                price: 3200,
+                originalPrice: 4500,
+                image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500&q=80",
+                rating: 4.5,
+                reviews: 198,
+                badge: "bestseller",
+                description: "Military-grade protection for iPhone 14/15. Dual-layer design with air cushion technology. Kickstand included.",
+                features: ["Military Grade", "Dual Layer", "Kickstand", "Wireless Charge Compatible"]
+            },
+            {
+                id: 6,
+                name: "Mi 10000mAh Slim",
+                category: "powerbanks",
+                price: 3500,
+                originalPrice: 4990,
+                image: "https://images.unsplash.com/photo-1615526675159-e248c3021d3f?w=500&q=80",
+                rating: 4.4,
+                reviews: 312,
+                badge: null,
+                description: "Ultra-slim aluminum body power bank. 18W fast charging support. LED power indicator.",
+                features: ["Slim Design", "18W Fast Charge", "Aluminum Body", "LED Indicator"]
+            },
+            {
+                id: 7,
+                name: "Apple 20W USB-C Adapter",
+                category: "chargers",
+                price: 5500,
+                originalPrice: 7500,
+                image: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=500&q=80",
+                rating: 4.9,
+                reviews: 445,
+                badge: "bestseller",
+                description: "Original Apple 20W USB-C power adapter. Fast charging for iPhone and iPad. Compact and travel-friendly.",
+                features: ["20W Output", "USB-C PD", "Apple Original", "Compact Size"]
+            },
+            {
+                id: 8,
+                name: "Lightning to 3.5mm Adapter",
+                category: "other",
+                price: 1500,
+                originalPrice: 2200,
+                image: "https://images.unsplash.com/photo-1572569028738-411a197b83cd?w=500&q=80",
+                rating: 4.3,
+                reviews: 156,
+                badge: null,
+                description: "Connect traditional headphones to iPhone. Supports remote control and microphone. MFi certified.",
+                features: ["MFi Certified", "Remote Support", "Microphone", "High Fidelity"]
+            },
+            {
+                id: 9,
+                name: "Samsung 25W Super Fast Charger",
+                category: "chargers",
+                price: 3800,
+                originalPrice: 5500,
+                image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500&q=80",
+                rating: 4.6,
+                reviews: 203,
+                badge: "new",
+                description: "Super Fast Charging for Galaxy devices. USB-C to USB-C cable included. Intelligent power distribution.",
+                features: ["25W Output", "USB-C", "Cable Included", "Smart IC"]
+            },
+            {
+                id: 10,
+                name: "AirPods Pro 2nd Gen",
+                category: "earphones",
+                price: 65000,
+                originalPrice: 85000,
+                image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=500&q=80",
+                rating: 4.9,
+                reviews: 78,
+                badge: "new",
+                description: "Active Noise Cancellation with H2 chip. Personalized Spatial Audio. Up to 6 hours listening time.",
+                features: ["H2 Chip", "Spatial Audio", "6h Battery", "MagSafe Case"]
+            },
+            {
+                id: 11,
+                name: "MagSafe Clear Case",
+                category: "cases",
+                price: 4500,
+                originalPrice: 6500,
+                image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500&q=80",
+                rating: 4.5,
+                reviews: 134,
+                badge: null,
+                description: "Crystal clear MagSafe compatible case. Anti-yellowing technology. Military-grade drop protection.",
+                features: ["MagSafe", "Anti-Yellowing", "Drop Protection", "Clear Design"]
+            },
+            {
+                id: 12,
+                name: "3-in-1 Wireless Charging Pad",
+                category: "other",
+                price: 8500,
+                originalPrice: 12000,
+                image: "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500&q=80",
+                rating: 4.7,
+                reviews: 92,
+                badge: "bestseller",
+                description: "Charge iPhone, Apple Watch, and AirPods simultaneously. 15W fast wireless charging. LED indicators.",
+                features: ["3-in-1 Design", "15W Fast Charge", "LED Indicators", "Case Friendly"]
+            }
+        ];
+
+        // State
+        let cart = [];
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            renderBestSellers();
+            renderNewArrivals();
+            updateCartUI();
+        });
+
+        // Render Functions
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            let filtered = products;
+            
+            if (currentCategory !== 'all') {
+                filtered = products.filter(p => p.category === currentCategory);
+            }
+            
+            if (searchQuery) {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    p.description.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-search text-4xl text-gray-600 mb-4"></i>
+                        <p class="text-gray-400">No products found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(product => createProductCard(product)).join('');
+        }
+
+        function createProductCard(product) {
+            const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+            const badgeClass = product.badge === 'bestseller' ? 'badge-bestseller' : 'badge-new';
+            const badgeText = product.badge === 'bestseller' ? 'Best Seller' : 'New';
+            
+            return `
+                <div class="product-card glass-panel rounded-2xl overflow-hidden border border-white/5 group cursor-pointer" onclick="showProductDetail(${product.id})">
+                    <div class="relative image-zoom aspect-square bg-nexora-gray">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                        ${product.badge ? `<span class="absolute top-3 left-3 ${badgeClass} text-white text-xs font-bold px-3 py-1 rounded-full">${badgeText}</span>` : ''}
+                        ${discount > 0 ? `<span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">-${discount}%</span>` : ''}
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <button onclick="event.stopPropagation(); addToCart(${product.id})" class="bg-nexora-accent text-nexora-black font-bold py-2 px-4 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-2">
+                            <div class="star-rating text-xs mr-2">
+                                ${getStarRating(product.rating)}
+                            </div>
+                            <span class="text-xs text-gray-500">(${product.reviews})</span>
+                        </div>
+                        <h3 class="font-semibold text-white mb-1 line-clamp-1 group-hover:text-nexora-accent transition-colors">${product.name}</h3>
+                        <p class="text-gray-400 text-sm mb-3 line-clamp-2">${product.description}</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-nexora-accent font-bold text-lg">Rs. ${product.price.toLocaleString()}</span>
+                                ${product.originalPrice > product.price ? `<span class="text-gray-500 text-sm line-through ml-2">Rs. ${product.originalPrice.toLocaleString()}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getStarRating(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(rating)) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star text-gray-600"></i>';
+                }
+            }
+            return stars;
+        }
+
+        function renderBestSellers() {
+            const bestSellers = products.filter(p => p.badge === 'bestseller').slice(0, 4);
+            document.getElementById('bestSellersGrid').innerHTML = bestSellers.map(product => createProductCard(product)).join('');
+        }
+
+        function renderNewArrivals() {
+            const newArrivals = products.filter(p => p.badge === 'new');
+            const container = document.getElementById('newArrivalsContainer');
+            container.innerHTML = newArrivals.map(product => `
+                <div class="snap-start flex-shrink-0 w-72">
+                    ${createProductCard(product)}
+                </div>
+            `).join('');
+        }
+
+        // Category Filter
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Update active state
+            document.querySelectorAll('.category-pill').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category === 'all' ? 'all' : category)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderProducts();
+            
+            // Scroll to products if not already there
+            const productsSection = document.getElementById('products');
+            const rect = productsSection.getBoundingClientRect();
+            if (rect.top > window.innerHeight || rect.bottom < 0) {
+                productsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Search
+        function toggleSearch() {
+            const input = document.getElementById('searchInput');
+            input.classList.toggle('active');
+            if (input.classList.contains('active')) {
+                input.focus();
+            } else {
+                input.value = '';
+                searchQuery = '';
+                renderProducts();
+            }
+        }
+
+        function handleSearch(event) {
+            searchQuery = event.target.value;
+            renderProducts();
+            if (searchQuery) {
+                document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Product Detail
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+            
+            const content = `
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="aspect-square rounded-xl overflow-hidden bg-nexora-gray">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-nexora-accent text-sm font-medium uppercase tracking-wider">${product.category}</span>
+                            ${product.badge ? `<span class="bg-nexora-accent/20 text-nexora-accent text-xs px-2 py-1 rounded-full">${product.badge === 'bestseller' ? 'Best Seller' : 'New Arrival'}</span>` : ''}
+                        </div>
+                        <h2 class="font-display text-3xl font-bold mb-4">${product.name}</h2>
+                        
+                        <div class="flex items-center mb-4">
+                            <div class="star-rating mr-2">${getStarRating(product.rating)}</div>
+                            <span class="text-gray-400 text-sm">${product.rating} (${product.reviews} reviews)</span>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <span class="text-3xl font-bold text-white">Rs. ${product.price.toLocaleString()}</span>
+                            ${product.originalPrice > product.price ? `
+                                <span class="text-lg text-gray-500 line-through ml-3">Rs. ${product.originalPrice.toLocaleString()}</span>
+                                <span class="ml-2 bg-red-500/20 text-red-400 text-sm px-2 py-1 rounded">Save ${discount}%</span>
+                            ` : ''}
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 leading-relaxed">${product.description}</p>
+                        
+                        <div class="mb-8">
+                            <h4 class="font-semibold mb-3">Key Features</h4>
+                            <ul class="grid grid-cols-2 gap-2">
+                                ${product.features.map(f => `
+                                    <li class="flex items-center text-sm text-gray-400">
+                                        <i class="fas fa-check text-nexora-accent mr-2"></i> ${f}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="flex gap-4 mb-6">
+                            <button onclick="addToCart(${product.id}); closeProductModal()" class="flex-1 bg-nexora-accent hover:bg-nexora-accentHover text-nexora-black font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                            </button>
+                            <button onclick="buyNow(${product.id})" class="flex-1 bg-white hover:bg-gray-100 text-nexora-black font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                Buy Now
+                            </button>
+                        </div>
+                        
+                        <a href="https://wa.me/94771234567?text=Hi Nexora, I'm interested in ${encodeURIComponent(product.name)}" target="_blank" class="inline-flex items-center text-green-400 hover:text-green-300 transition-colors text-sm">
+                            <i class="fab fa-whatsapp mr-2 text-lg"></i>
+                            Order via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('productModalContent').innerHTML = content;
+            document.getElementById('productModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function buyNow(productId) {
+            addToCart(productId);
+            closeProductModal();
+            showCheckout();
+        }
+
+        // Cart Functions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartUI();
+            showToast('Added to Cart', `${product.name} has been added to your cart`);
+            
+            // Animate cart icon
+            const cartBtn = document.querySelector('.fa-shopping-cart');
+            cartBtn.parentElement.classList.add('animate-bounce');
+            setTimeout(() => cartBtn.parentElement.classList.remove('animate-bounce'), 1000);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cartCount');
+            const itemsEl = document.getElementById('cartItems');
+            const footerEl = document.getElementById('cartFooter');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const totalEl = document.getElementById('cartTotal');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            if (totalItems > 0) {
+                countEl.textContent = totalItems;
+                countEl.classList.remove('hidden');
+                footerEl.classList.remove('hidden');
+                
+                itemsEl.innerHTML = cart.map(item => `
+                    <div class="flex gap-4 bg-nexora-gray/50 rounded-lg p-3 border border-white/5">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-sm mb-1 line-clamp-1">${item.name}</h4>
+                            <p class="text-nexora-accent font-bold">Rs. ${item.price.toLocaleString()}</p>
+                            <div class="flex items-center mt-2 gap-2">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="quantity-btn w-6 h-6 rounded bg-white/10 flex items-center justify-center text-xs hover:bg-white/20">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="text-sm w-6 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="quantity-btn w-6 h-6 rounded bg-white/10 flex items-center justify-center text-xs hover:bg-white/20">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="ml-auto text-gray-500 hover:text-red-400 transition-colors">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                subtotalEl.textContent = `Rs. ${subtotal.toLocaleString()}`;
+                totalEl.textContent = `Rs. ${subtotal.toLocaleString()}`;
+            } else {
+                countEl.classList.add('hidden');
+                footerEl.classList.add('hidden');
+                itemsEl.innerHTML = '<p class="text-gray-400 text-center py-8">Your cart is empty</p>';
+                subtotalEl.textContent = 'Rs. 0';
+                totalEl.textContent = 'Rs. 0';
+            }
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.add('open');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Checkout
+        function showCheckout() {
+            toggleCart();
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('checkoutSubtotal').textContent = `Rs. ${subtotal.toLocaleString()}`;
+            document.getElementById('checkoutTotal').textContent = `Rs. ${(subtotal + 300).toLocaleString()}`;
+            document.getElementById('checkoutModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function handleCheckout(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const name = event.target.querySelector('input[type="text"]').value;
+            const phone = event.target.querySelector('input[type="tel"]').value;
+            const address = event.target.querySelector('textarea').value;
+            
+            // Generate order summary for WhatsApp
+            const items = cart.map(item => `${item.name} x${item.quantity} - Rs. ${(item.price * item.quantity).toLocaleString()}`).join('\n');
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 300;
+            
+            const message = `*New Order from Nexora*\n\n*Customer:* ${name}\n*Phone:* ${phone}\n*Address:* ${address}\n\n*Order:*\n${items}\n\n*Delivery:* Rs. 300\n*Total:* Rs. ${total.toLocaleString()}\n\n*Payment:* Cash on Delivery`;
+            
+            // Open WhatsApp with order details
+            window.open(`https://wa.me/94771234567?text=${encodeURIComponent(message)}`, '_blank');
+            
+            // Clear cart and close modal
+            cart = [];
+            updateCartUI();
+            closeCheckout();
+            showToast('Order Sent!', 'Your order details have been sent via WhatsApp');
+        }
+
+        function handleQuickOrder(event) {
+            event.preventDefault();
+            const form = event.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const phone = form.querySelector('input[type="tel"]').value;
+            const message = form.querySelector('textarea').value;
+            
+            const whatsappMessage = `*Quick Order Request*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Message:* ${message}`;
+            window.open(`https://wa.me/94771234567?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+            
+            form.reset();
+            showToast('Message Sent', 'We will contact you shortly');
+        }
+
+        // UI Helpers
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function showHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToBestSellers() {
+            document.getElementById('bestsellers').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showContact() {
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollNewArrivals(direction) {
+            const container = document.getElementById('newArrivalsContainer');
+            const scrollAmount = 300;
+            container.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Close modals on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeProductModal();
+                closeCheckout();
+                const sidebar = document.getElementById('cartSidebar');
+                if (sidebar.classList.contains('open')) toggleCart();
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
